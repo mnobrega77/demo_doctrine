@@ -3,37 +3,56 @@
 namespace App\Form;
 
 use App\Entity\Utilisateur;
+use App\Repository\UtilisateurRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UtilisateurType extends AbstractType
 {
-    private $token;
+    private $userRepo;
 
-    public function __construct(TokenStorageInterface $token)
+    public function __construct(UtilisateurRepository $userRepo)
     {
-        $this->token = $token;
+        $this->userRepo = $userRepo;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $roles = $this->token->getToken()->getUser()->getRoles();
+
+
         $builder
             ->add('email')
-            ->add('roles', ChoiceType::class, [
-                'label' => 'form.label.role',
-                'choices' => $roles,
-                'required' => true,
+
+//            ->add('password')
+//            ->add('isVerified')
+            ->add('roles', ChoiceType::class, array(
+                'attr' => array(
+                    'required' => false,
+                ),
                 'multiple' => true,
-                'expanded' => false
-            ])
-            ->add('password')
-            ->add('isVerified')
+                'expanded' => true, // render check-boxes
+                'choices' => [
+                    'admin' => 'ROLE_ADMIN',
+                    'user' => 'ROLE_USER',
+                ]
+            ))
         ;
+//        $builder->get('roles')
+//            ->addModelTransformer(new CallbackTransformer(
+//                function ($rolesAsArray) {
+//                    return count($rolesAsArray) ? $rolesAsArray[0]: null;
+//                },
+//                function ($rolesAsString) {
+//                    return [$rolesAsString];
+//                }
+//            ));
     }
+
+
 
 
     public function configureOptions(OptionsResolver $resolver): void

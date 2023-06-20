@@ -1,4 +1,7 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.email) }}
+ {% for role in form.roles %}
+     <li>{{ form_row(role) }}</li>
+ {% endfor %}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
