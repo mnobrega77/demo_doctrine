@@ -25,8 +25,11 @@ class UtilisateurType extends AbstractType
             ->add('email')
             ->add('roles', ChoiceType::class, [
                 'label' => 'form.label.role',
-                'choices' => $roles,
-                'required' => true,
+                'choices' => [
+                    "user" => "ROLE_USER",
+                    "admin" => "ROLE_ADMIN"
+                    ],
+                'required' => false,
                 'multiple' => true,
                 'expanded' => false
             ])
