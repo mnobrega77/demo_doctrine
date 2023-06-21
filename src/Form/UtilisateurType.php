@@ -33,6 +33,13 @@ class UtilisateurType extends AbstractType
                 'attr' => array(
                     'required' => false,
                 ),
+            ->add('roles', ChoiceType::class, [
+                'label' => 'form.label.role',
+                'choices' => [
+                    "user" => "ROLE_USER",
+                    "admin" => "ROLE_ADMIN"
+                    ],
+                'required' => false,
                 'multiple' => true,
                 'expanded' => true, // render check-boxes
                 'choices' => [
@@ -41,18 +48,7 @@ class UtilisateurType extends AbstractType
                 ]
             ))
         ;
-//        $builder->get('roles')
-//            ->addModelTransformer(new CallbackTransformer(
-//                function ($rolesAsArray) {
-//                    return count($rolesAsArray) ? $rolesAsArray[0]: null;
-//                },
-//                function ($rolesAsString) {
-//                    return [$rolesAsString];
-//                }
-//            ));
     }
-
-
 
 
     public function configureOptions(OptionsResolver $resolver): void
