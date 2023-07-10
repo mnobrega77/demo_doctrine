@@ -31,8 +31,8 @@ class UtilisateurType extends AbstractType
 //            ->add('isVerified')
             ->add('roles', ChoiceType::class, array(
                 'attr' => array(
-                    'required' => false,
-                ),
+                    'required' => false)
+                ))
             ->add('roles', ChoiceType::class, [
                 'label' => 'form.label.role',
                 'choices' => [
@@ -45,8 +45,8 @@ class UtilisateurType extends AbstractType
                 'choices' => [
                     'admin' => 'ROLE_ADMIN',
                     'user' => 'ROLE_USER',
-                ]
-            ))
+                ]]
+            )
         ;
     }
 
